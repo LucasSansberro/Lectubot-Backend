@@ -8,18 +8,18 @@ import "./strategies/discordStrategy.js";
 import MongoStore from "connect-mongo";
 import ENV from "./config.js";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 
 const app = express();
-const { MONGOURL, SECRETSESSION } = ENV;
+const { URLMONGO, SECRETSESSION } = ENV;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(
-  cors({
-    origin: "http//localhost:4200",
-    credentials: true,
-  })
-);
+app.use(cors({
+  origin: true, 
+  credentials: true,
+  methods: 'POST,GET,PUT,OPTIONS,DELETE' 
+}));
 
 app.use(
   session({
@@ -27,7 +27,7 @@ app.use(
     saveUninitialized: false,
     resave: false,
     store: MongoStore.create({
-      mongoUrl: MONGOURL,
+      mongoUrl: URLMONGO,
     }),
     cookie: {
       maxAge: 60000 * 60 * 24 * 7,

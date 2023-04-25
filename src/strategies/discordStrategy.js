@@ -23,7 +23,6 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
-        
         const user = await User.findOne({ discordId: profile.id });
         if (user) {
           return done(null, user);
@@ -32,6 +31,7 @@ passport.use(
         const newUser = new User({
           discordId: profile.id,
           username: profile.username,
+          avatar: profile.avatar,
           guilds: profile.guilds,
         });
 

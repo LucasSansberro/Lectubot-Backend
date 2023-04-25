@@ -9,7 +9,7 @@ authRouter.get("/", isNotAuthorized, passport.authenticate("discord"));
 authRouter.get(
   "/redirect",
   passport.authenticate("discord", {
-    successRedirect: "/dashboard",
+    successRedirect: "http://localhost:4200",
     failureRedirect: "/",
   })
 );
