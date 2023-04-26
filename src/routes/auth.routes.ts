@@ -15,8 +15,16 @@ authRouter.get(
 );
 
 authRouter.get("/logout", (req, res) => {
-  req.logout();
-  res.redirect("/")
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+  });
+  res.redirect("/http://localhost:4200");
 });
 
 export default authRouter;
+function next(err: any): void {
+  throw new Error("Function not implemented.");
+}
+

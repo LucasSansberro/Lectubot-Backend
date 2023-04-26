@@ -18,6 +18,10 @@ const userSchema = new Schema(
       type: Array,
       required: true,
     },
+    books: {
+      type: Array,
+      required: true,
+    },
   },
   { timestamps: true }
 );

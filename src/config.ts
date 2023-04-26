@@ -1,6 +1,6 @@
 import "dotenv/config.js";
 
-export default {
+export default{
   URLMONGO: process.env.URLMONGO,
   CLIENTID: process.env.CLIENTID,
   CLIENTSECRET: process.env.CLIENTSECRET,

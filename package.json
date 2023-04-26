@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon src/index.js"
+    "start": " node --no-warnings --loader ts-node/esm ./src/index.ts"
   },
   "keywords": [],
   "author": "",
@@ -22,6 +22,13 @@
     "passport-discord": "^0.1.4"
   },
   "devDependencies": {
-    "nodemon": "^2.0.22"
+    "@types/cookie-parser": "^1.4.3",
+    "@types/cors": "^2.8.13",
+    "@types/express-session": "^1.17.7",
+    "@types/passport": "^1.0.12",
+    "@types/passport-discord": "^0.1.6",
+    "nodemon": "^2.0.22",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.4"
   }
 }
