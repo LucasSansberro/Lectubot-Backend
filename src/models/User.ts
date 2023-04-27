@@ -1,5 +1,5 @@
 import { model, ObjectId, Schema } from "mongoose";
-import { BooksRead, booksReadSchema } from "./BooksRead";
+import { BooksRead, booksReadSchema } from "./BooksRead.js";
 
 export interface IUser {
   _id?: ObjectId;

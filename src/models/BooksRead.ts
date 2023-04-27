@@ -1,6 +1,6 @@
 import { ObjectId, Schema } from "mongoose";
-import { BookReadStatus } from "./BookReadStatus";
-import { Genre } from "./Genre";
+import { BookReadStatus, bookReadStatusSchema } from "./BookReadStatus.js";
+import { Genre, genreSchema } from "./Genre.js";
 
 export interface BooksRead {
   _id: ObjectId;
@@ -32,14 +32,14 @@ export const booksReadSchema = new Schema<BooksRead>({
     required: true,
   },
   genre: {
-    type: Genre,
+    type: genreSchema,
     required: true,
   },
   stars: {
     type: Number,
   },
   status: {
-    type: BookReadStatus,
+    type: bookReadStatusSchema,
     required: true,
   },
   cover: {

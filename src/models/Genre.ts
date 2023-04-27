@@ -1,3 +1,5 @@
+import { Schema } from "mongoose";
+
 export class Genre {
   fiction: boolean;
   name: string;
@@ -7,6 +9,17 @@ export class Genre {
     this.name = name;
   }
 }
+
+export const genreSchema = new Schema<Genre>({
+  fiction: {
+    type: Boolean,
+    required: true,
+  },
+  name: {
+    type: String,
+    required: true,
+  },
+});
 
 const adventureGenre = new Genre(true, "Aventura y acción");
 const scifiGenre = new Genre(true, "Ciencia ficción");
