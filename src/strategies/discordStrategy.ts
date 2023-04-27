@@ -30,7 +30,9 @@ passport.use(
         if (user) {
           return done(null, user);
         }
+        console.log(profile);
 
+        //TODO Dont upload guilds to schema. Compare LECTORESID to check if user is member
         const newUser = new User({
           discordId: profile.id,
           username: profile.username,
