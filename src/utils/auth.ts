@@ -4,13 +4,13 @@ export const isAuthorized = (req: Request, res: Response, next: NextFunction) =>
   if (req.user) {
     next();
   } else {
-    res.redirect("/");
+    throw "You need to login to accesss this section"
   }
 };
 
 export const isNotAuthorized = (req: Request, res: Response, next: NextFunction) => {
   if (req.user) {
-    res.redirect("/");
+    throw "You have already logged in"
   } else {
     next();
   }

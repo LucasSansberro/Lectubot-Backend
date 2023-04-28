@@ -1,5 +1,5 @@
 import { ObjectId, Schema, model } from "mongoose";
-import { Genre } from "./Genre";
+import { Genre, genreSchema } from "./Genre.js";
 
 export interface IBook {
   _id?: ObjectId;
@@ -7,10 +7,10 @@ export interface IBook {
   author: string;
   pages: number;
   genre: Genre;
-  stars: number[];
   cover: string;
   synopsis: string;
-  reviews: string[];
+  stars?: number[];
+  reviews?: string[];
 }
 
 export const bookSchema = new Schema<IBook>({
@@ -27,7 +27,7 @@ export const bookSchema = new Schema<IBook>({
     required: true,
   },
   genre: {
-    type: Genre,
+    type: genreSchema,
     required: true,
   },
   stars: {
