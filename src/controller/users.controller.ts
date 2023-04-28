@@ -1,12 +1,21 @@
 import { Request, Response, NextFunction } from "express";
-import { getUsuarioService } from "../services/users.service.js";
+import { getAllUsersService, getOwnUserservice } from "../services/users.service.js";
 
-export const getUsuarioController = async (req: Request, res: Response) => {
+export const getAllUsersController = async (req: Request, res: Response) => {
   try {
-    const user = req.user;
-    const userFound = await getUsuarioService(user!);
+    const allUsers = await getAllUsersService();
+    res.json({ allUsers });
+  } catch (error) {
+    res.json(error);
+  }
+};
 
-    res.json({ userFound });
+export const getOwnUserController = async (req: Request, res: Response) => {
+  try {
+    const userId = req.user;
+    const ownUser = await getOwnUserservice(userId!);
+
+    res.json({ ownUser });
   } catch (error) {
     res.json({ error });
   }
