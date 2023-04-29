@@ -1,6 +1,6 @@
 import { ObjectId } from "mongoose";
-import Book, { IBook } from "../models/Book.js";
-import { horrorGenre } from "../models/Genre.js";
+import Book, { IBook } from "../models/Schemas/Book.js";
+import { horrorGenre } from "../models/Enum/Genre.js";
 
 export const getAllBooksService = async () => {
   try {

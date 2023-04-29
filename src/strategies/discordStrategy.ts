@@ -2,7 +2,7 @@ import { Model } from "mongoose";
 import passport from "passport";
 import { Strategy } from "passport-discord";
 import ENV from "../config.js";
-import User from "../models/User.js";
+import User from "../models/Schemas/User.js";
 
 const { CLIENTID, CLIENTSECRET } = ENV;
 type User = {
