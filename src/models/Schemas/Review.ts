@@ -1,4 +1,4 @@
-import mongoose, { ObjectId, Schema } from "mongoose";
+import mongoose, { ObjectId, Schema, model } from "mongoose";
 
 export interface IReview {
   _id?: ObjectId;
@@ -10,13 +10,15 @@ export interface IReview {
 
 const objectId = mongoose.Schema.Types.ObjectId;
 
-export const reviewSchema = new Schema<IReview>({
+export const reviewSchema: Schema<IReview> = new Schema<IReview>({
   user_id: {
     type: objectId,
+    ref:"Users",
     required: true,
   },
   book_id: {
     type: objectId,
+    ref:"Books",
     required: true,
   },
   content: {
@@ -28,3 +30,5 @@ export const reviewSchema = new Schema<IReview>({
     required: true,
   },
 });
+
+export const Review = model<IReview>("Reviews", reviewSchema);

@@ -1,13 +1,11 @@
-import { ObjectId, Schema, model } from "mongoose";
+import mongoose, { ObjectId, Schema, model } from "mongoose";
 import { Genre } from "../Enum/Genre.js";
-import { IAuthor, authorSchema } from "./Author.js";
 import { IReview, reviewSchema } from "./Review.js";
-
 
 export interface IBook {
   _id?: ObjectId;
   title: string;
-  author: IAuthor;
+  author: ObjectId;
   pages: number;
   genre: Genre[];
   cover: string;
@@ -15,6 +13,7 @@ export interface IBook {
   stars?: number[];
   reviews?: IReview[];
 }
+const objectId = mongoose.Schema.Types.ObjectId;
 
 export const bookSchema: Schema<IBook> = new Schema<IBook>(
   {
@@ -23,7 +22,8 @@ export const bookSchema: Schema<IBook> = new Schema<IBook>(
       required: true,
     },
     author: {
-      type: authorSchema,
+      type: objectId,
+      ref:"Authors",
       required: true,
     },
     pages: {
@@ -53,4 +53,6 @@ export const bookSchema: Schema<IBook> = new Schema<IBook>(
   { timestamps: true }
 );
 
-export default model<IBook>("Books", bookSchema);
+export const Book = model<IBook>("Books", bookSchema);
+
+//TODO Investigar como usar populate

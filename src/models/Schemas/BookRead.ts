@@ -1,10 +1,9 @@
-import { ObjectId, Schema } from "mongoose";
+import { ObjectId, Schema, model } from "mongoose";
 import { BookReadStatus } from "../Enum/BookReadStatus.js";
 import { Genre } from "../Enum/Genre.js";
 import { IReview, reviewSchema } from "./Review.js";
 
-
-export interface BooksRead {
+export interface IBookRead {
   _id: ObjectId;
   title: string;
   author: string;
@@ -18,7 +17,7 @@ export interface BooksRead {
   finished?: Date;
 }
 
-export const booksReadSchema = new Schema<BooksRead>({
+export const bookReadSchema: Schema<IBookRead> = new Schema<IBookRead>({
   _id: {
     type: String,
     required: true,
@@ -63,3 +62,5 @@ export const booksReadSchema = new Schema<BooksRead>({
     type: Date,
   },
 });
+
+export const BookRead = model<IBookRead>("BooksRead", bookReadSchema);

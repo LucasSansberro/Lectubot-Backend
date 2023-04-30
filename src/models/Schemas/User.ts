@@ -1,15 +1,15 @@
 import { model, ObjectId, Schema } from "mongoose";
-import { BooksRead, booksReadSchema } from "./BooksRead.js";
+import { bookReadSchema, IBookRead } from "./BookRead.js";
 
 export interface IUser {
   _id?: ObjectId;
   discordId: string;
   username: string;
   avatar: string;
-  books: BooksRead[];
+  books: IBookRead[];
 }
 
-const userSchema = new Schema<IUser>(
+const userSchema: Schema<IUser> = new Schema<IUser>(
   {
     discordId: {
       type: String,
@@ -24,11 +24,11 @@ const userSchema = new Schema<IUser>(
       required: true,
     },
     books: {
-      type: [booksReadSchema],
+      type: [bookReadSchema],
       required: true,
     },
   },
   { timestamps: true }
 );
 
-export default model<IUser>("User", userSchema);
+export const User = model<IUser>("Users", userSchema);
