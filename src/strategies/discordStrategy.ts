@@ -2,7 +2,7 @@ import { Model } from "mongoose";
 import passport from "passport";
 import { Strategy } from "passport-discord";
 import ENV from "../config.js";
-import User from "../models/Schemas/User.js";
+import {User} from "../models/Schemas/User.js";
 
 const { CLIENTID, CLIENTSECRET } = ENV;
 type User = {
@@ -19,8 +19,8 @@ passport.deserializeUser(async (user: User, done) => {
 passport.use(
   new Strategy(
     {
-      clientID: CLIENTID!,
-      clientSecret: CLIENTSECRET!,
+      clientID: CLIENTID,
+      clientSecret: CLIENTSECRET,
       callbackURL: "/auth/redirect",
       scope: ["identify", "guilds"],
     },

@@ -25,7 +25,7 @@ app.use(
 
 app.use(
   session({
-    secret: SECRETSESSION!,
+    secret: SECRETSESSION,
     saveUninitialized: false,
     resave: false,
     store: MongoStore.create({

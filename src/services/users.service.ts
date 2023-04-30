@@ -1,4 +1,4 @@
-import User from "../models/Schemas/User.js";
+import {User} from "../models/Schemas/User.js";
 
 export const getAllUsersService = async () => {
   try {

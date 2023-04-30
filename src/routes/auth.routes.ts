@@ -1,15 +1,16 @@
 import Router from "express";
 import passport from "passport";
 import { isNotAuthorized } from "../utils/auth.js";
-
+import ENV from "../config.js"
 const authRouter = Router();
 
+const {FRONTENDURL} = ENV
 authRouter.get("/", isNotAuthorized, passport.authenticate("discord"));
 
 authRouter.get(
   "/redirect",
   passport.authenticate("discord", {
-    successRedirect: "http://localhost:4200",
+    successRedirect: FRONTENDURL,
     failureRedirect: "/",
   })
 );
@@ -20,7 +21,7 @@ authRouter.get("/logout", (req, res) => {
       return next(err);
     }
   });
-  res.redirect("/http://localhost:4200");
+  res.redirect(FRONTENDURL);
 });
 
 export default authRouter;

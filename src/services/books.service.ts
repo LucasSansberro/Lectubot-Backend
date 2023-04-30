@@ -1,6 +1,4 @@
-import { ObjectId } from "mongoose";
-import Book, { IBook } from "../models/Schemas/Book.js";
-import { horrorGenre } from "../models/Enum/Genre.js";
+import { Book, IBook } from "../models/Schemas/Book.js";
 
 export const getAllBooksService = async () => {
   try {
@@ -26,14 +24,5 @@ export const postBookService = async (book: IBook) => {
     throw "Error getting a book by ID";
   }
 };
-
-const book : IBook = {
-  author:"Pepe Test",
-  title:"El gran libro de pepe",
-  cover:"Cover buenísima",
-  genre:horrorGenre,
-  pages:500,
-  synopsis:"Sinopsis buenísima"
-}
 
 getBookByIdService("644c564b14f75475086084e8").then((res)=> console.log(res) );
