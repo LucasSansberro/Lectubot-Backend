@@ -5,7 +5,10 @@ import { IReview, reviewSchema } from "./Review.js";
 export interface IBook {
   _id?: ObjectId;
   title: string;
-  author: ObjectId;
+  author: {
+    _id: ObjectId;
+    name: string;
+  };
   pages: number;
   genre: Genre[];
   cover: string;
@@ -22,9 +25,20 @@ export const bookSchema: Schema<IBook> = new Schema<IBook>(
       required: true,
     },
     author: {
-      type: objectId,
-      ref:"Authors",
-      required: true,
+      id: {
+        type: objectId,
+        refPath: "authorModel",
+        required: true,
+      },
+      name: {
+        type: String,
+        required: true,
+      },
+      authorModel: {
+        type: String,
+        required: true,
+        enum: ["Authors"],
+      },
     },
     pages: {
       type: Number,
@@ -54,5 +68,3 @@ export const bookSchema: Schema<IBook> = new Schema<IBook>(
 );
 
 export const Book = model<IBook>("Books", bookSchema);
-
-//TODO Investigar como usar populate

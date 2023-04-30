@@ -5,6 +5,7 @@ import { IBook, bookSchema } from "./Book.js";
 export interface IAuthor {
   _id?: ObjectId;
   name: string;
+  image?: string;
   nationality: string;
   genre: Genre[];
   books: IBook[];
@@ -14,6 +15,9 @@ export const authorSchema: Schema<IAuthor> = new Schema<IAuthor>({
   name: {
     type: String,
     required: true,
+  },
+  image: {
+    type: String,
   },
   nationality: {
     type: String,

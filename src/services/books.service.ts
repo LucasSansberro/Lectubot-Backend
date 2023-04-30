@@ -1,28 +1,42 @@
+import { deleteById, editById, getAll, getById, post } from "../database/mongoDAO.js";
 import { Book, IBook } from "../models/Schemas/Book.js";
 
 export const getAllBooksService = async () => {
   try {
-    return await Book.find().lean();
+    return await getAll(Book);
   } catch (e) {
-    throw "Error getting all books";
+    throw "Error getting all books: " + e;
   }
 };
 
 export const getBookByIdService = async (id: string) => {
   try {
-    return await Book.findById(id).lean();
+    return await getById(Book, id);
   } catch (e) {
-    throw "Error getting a book by ID";
+    throw "Error getting a book by ID: " + e;
   }
 };
 
-export const postBookService = async (book: IBook) => {
+export const postBookService = async (newBook: IBook) => {
   try {
-    const test = new Book(book) 
-    return await test.save()
+    return await post(Book, newBook);
   } catch (e) {
-    throw "Error getting a book by ID";
+    throw "Error creating a book: " + e;
   }
 };
 
-getBookByIdService("644c564b14f75475086084e8").then((res)=> console.log(res) );
+export const editBookByIdService = async (id: string, updatedBook: IBook) => {
+  try {
+    return await editById(Book, id, updatedBook);
+  } catch (e) {
+    throw "Error updating a book by ID: " + e;
+  }
+};
+
+export const deleteBookById = async (id: string) => {
+  try {
+    return await deleteById(Book, id);
+  } catch (e) {
+    throw "Error deleting a book by ID: " + e;
+  }
+};

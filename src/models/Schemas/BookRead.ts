@@ -1,4 +1,4 @@
-import { ObjectId, Schema, model } from "mongoose";
+import mongoose, { ObjectId, Schema, model } from "mongoose";
 import { BookReadStatus } from "../Enum/BookReadStatus.js";
 import { Genre } from "../Enum/Genre.js";
 import { IReview, reviewSchema } from "./Review.js";
@@ -6,7 +6,10 @@ import { IReview, reviewSchema } from "./Review.js";
 export interface IBookRead {
   _id: ObjectId;
   title: string;
-  author: string;
+  author: {
+    _id: ObjectId;
+    name: string;
+  };
   pages: number;
   genre: Genre[];
   stars?: number;
@@ -16,6 +19,8 @@ export interface IBookRead {
   started: Date;
   finished?: Date;
 }
+
+const objectId = mongoose.Schema.Types.ObjectId;
 
 export const bookReadSchema: Schema<IBookRead> = new Schema<IBookRead>({
   _id: {
@@ -27,8 +32,20 @@ export const bookReadSchema: Schema<IBookRead> = new Schema<IBookRead>({
     required: true,
   },
   author: {
-    type: String,
-    required: true,
+    id: {
+      type: objectId,
+      refPath: "authorModel",
+      required: true,
+    },
+    name: {
+      type: String,
+      required: true,
+    },
+    authorModel: {
+      type: String,
+      required: true,
+      enum: ["Authors"],
+    },
   },
   pages: {
     type: Number,
