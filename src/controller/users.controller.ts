@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { getAllUsersService, getOwnUserservice } from "../services/users.service.js";
+import { getAllUsersService, getUserByIdService } from "../services/users.service.js";
 
 export const getAllUsersController = async (req: Request, res: Response) => {
   try {
@@ -13,7 +13,7 @@ export const getAllUsersController = async (req: Request, res: Response) => {
 export const getOwnUserController = async (req: Request, res: Response) => {
   try {
     const userId = req.user;
-    const ownUser = await getOwnUserservice(userId!);
+    const ownUser = await getUserByIdService(userId!);
 
     res.json({ ownUser });
   } catch (error) {

@@ -8,7 +8,7 @@ export const getAll = async (model: mongoose.Model<any>) => {
   }
 };
 
-export const getById = async (model: mongoose.Model<any>, id: string) => {
+export const getById = async (model: mongoose.Model<any>, id: string | Express.User) => {
   try {
     return await model.findById(id).lean();
   } catch (e) {

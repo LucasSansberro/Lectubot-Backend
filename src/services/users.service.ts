@@ -9,7 +9,7 @@ export const getAllUsersService = async () => {
   }
 };
 
-export const getUserByIdService = async (id: string) => {
+export const getUserByIdService = async (id: string | Express.User) => {
   try {
     return await getById(User, id);
   } catch (e) {
@@ -25,7 +25,7 @@ export const editUserByIdService = async (id: string, updatedUser: IUser) => {
   }
 };
 
-export const deleteUserById = async (id: string) => {
+export const deleteUserByIdService = async (id: string) => {
   try {
     return await deleteById(User, id);
   } catch (e) {

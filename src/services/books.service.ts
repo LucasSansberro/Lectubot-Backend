@@ -33,7 +33,7 @@ export const editBookByIdService = async (id: string, updatedBook: IBook) => {
   }
 };
 
-export const deleteBookById = async (id: string) => {
+export const deleteBookByIdService = async (id: string) => {
   try {
     return await deleteById(Book, id);
   } catch (e) {

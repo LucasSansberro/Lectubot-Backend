@@ -34,7 +34,7 @@ export const editAuthorByIdService = async (id: string, updatedAuthor: IAuthor) 
   }
 };
 
-export const deleteAuthorById = async (id: string) => {
+export const deleteAuthorByIdService = async (id: string) => {
   try {
     return await deleteById(Author, id);
   } catch (e) {

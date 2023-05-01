@@ -33,7 +33,7 @@ export const editReviewByIdService = async (id: string, updatedReview: IReview) 
   }
 };
 
-export const deleteReviewById = async (id: string) => {
+export const deleteReviewByIdService = async (id: string) => {
   try {
     return await deleteById(Review, id);
   } catch (e) {
