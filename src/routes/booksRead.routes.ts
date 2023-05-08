@@ -5,8 +5,8 @@ import {
   postBookReadController,
   editBookReadByIdController,
   deleteBookReadByIdController,
-} from "../controller/booksRead.controller";
-import { isAuthorized } from "../utils/auth";
+} from "../controller/booksRead.controller.js";
+import { isAuthorized } from "../utils/auth.js";
 
 const booksReadRouter = Router();
 

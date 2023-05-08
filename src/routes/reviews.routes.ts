@@ -5,8 +5,8 @@ import {
   postReviewController,
   editReviewByIdController,
   deleteReviewByIdController,
-} from "../controller/reviews.controller";
-import { isAuthorized } from "../utils/auth";
+} from "../controller/reviews.controller.js";
+import { isAuthorized } from "../utils/auth.js";
 
 const reviewsRouter = Router();
 

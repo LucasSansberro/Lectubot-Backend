@@ -1,10 +1,10 @@
 import Router from "express";
 import passport from "passport";
 import { isNotAuthorized } from "../utils/auth.js";
-import ENV from "../config.js"
+import ENV from "../config.js";
 const authRouter = Router();
+const { FRONTENDURL } = ENV;
 
-const {FRONTENDURL} = ENV
 authRouter.get("/", isNotAuthorized, passport.authenticate("discord"));
 
 authRouter.get(

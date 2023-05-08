@@ -5,7 +5,7 @@ import {
   postAuthorService,
   editAuthorByIdService,
   deleteAuthorByIdService,
-} from "../services/authors.service";
+} from "../services/authors.service.js";
 
 export const getAllAuthorsController = async (req: Request, res: Response) => {
   try {

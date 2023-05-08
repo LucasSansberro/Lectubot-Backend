@@ -5,8 +5,8 @@ import {
   postAuthorController,
   editAuthorByIdController,
   deleteAuthorByIdController,
-} from "../controller/authors.controller";
-import { isAuthorized } from "../utils/auth";
+} from "../controller/authors.controller.js";
+import { isAuthorized } from "../utils/auth.js";
 
 const authorsRouter = Router();
 

@@ -5,7 +5,7 @@ import {
   postBookReadService,
   editBookReadByIdService,
   deleteBookReadByIdService,
-} from "../services/booksRead.service";
+} from "../services/booksRead.service.js";
 
 export const getAllBooksReadController = async (req: Request, res: Response) => {
   try {

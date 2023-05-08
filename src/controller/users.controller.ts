@@ -15,7 +15,7 @@ export const getOwnUserController = async (req: Request, res: Response) => {
     const userId = req.user;
     const ownUser = await getUserByIdService(userId!);
 
-    res.json({ ownUser });
+    res.json({ userData: ownUser });
   } catch (error) {
     res.json({ error });
   }

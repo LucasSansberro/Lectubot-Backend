@@ -5,7 +5,7 @@ import {
   postReviewService,
   editReviewByIdService,
   deleteReviewByIdService,
-} from "../services/reviews.service";
+} from "../services/reviews.service.js";
 
 export const getAllReviewsController = async (req: Request, res: Response) => {
   try {
