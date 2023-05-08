@@ -1,9 +1,18 @@
 import Router from "express";
-import { getAllBooksController, getBookByIdController } from "../controller/books.controller.js";
+import {
+  deleteBookByIdController,
+  editBookByIdController,
+  getAllBooksController,
+  getBookByIdController,
+  postBookController,
+} from "../controller/books.controller.js";
 import { isAuthorized } from "../utils/auth.js";
 const booksRouter = Router();
 
-booksRouter.get("/", isAuthorized, getAllBooksController);
+booksRouter.get("/", getAllBooksController);
 booksRouter.get("/:id", isAuthorized, getBookByIdController);
+booksRouter.post("/", isAuthorized, postBookController);
+booksRouter.put("/:id", isAuthorized, editBookByIdController);
+booksRouter.delete("/:id", isAuthorized, deleteBookByIdController);
 
 export default booksRouter;

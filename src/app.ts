@@ -6,7 +6,10 @@ import session from "express-session";
 import passport from "passport";
 import ENV from "./config.js";
 import authRouter from "./routes/auth.routes.js";
+import authorsRouter from "./routes/authors.routes.js";
 import booksRouter from "./routes/books.routes.js";
+import booksReadRouter from "./routes/booksRead.routes.js";
+import reviewsRouter from "./routes/reviews.routes.js";
 import usersRouter from "./routes/users.routes.js";
 import "./strategies/discordStrategy.js";
 
@@ -48,5 +51,8 @@ app.use((req, res, next) => {
 app.use("/auth", authRouter);
 app.use("/users", usersRouter);
 app.use("/books", booksRouter);
+app.use("/booksRead", booksReadRouter);
+app.use("/authors", authorsRouter);
+app.use("/reviews", reviewsRouter);
 
 export default app;
