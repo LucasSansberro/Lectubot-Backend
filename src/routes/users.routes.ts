@@ -5,6 +5,6 @@ import { isAuthorized } from "../utils/auth.js";
 const usersRouter = Router();
 
 usersRouter.get("/",isAuthorized, getAllUsersController)
-usersRouter.get("/me",isAuthorized, getOwnUserController)
+usersRouter.get("/me", getOwnUserController)
 
 export default usersRouter;

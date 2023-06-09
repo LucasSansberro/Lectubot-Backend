@@ -21,7 +21,6 @@ authRouter.get("/logout", (req, res) => {
       return next(err);
     }
   });
-  res.redirect(FRONTENDURL);
 });
 
 export default authRouter;
