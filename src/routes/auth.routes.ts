@@ -10,21 +10,25 @@ authRouter.get("/", isNotAuthorized, passport.authenticate("discord"));
 authRouter.get(
   "/redirect",
   passport.authenticate("discord", {
-    successRedirect: FRONTENDURL,
+    successRedirect: "post-auth",
     failureRedirect: "/",
   })
 );
 
-authRouter.get("/logout", (req, res) => {
-  req.logout((err) => {
+authRouter.get("/post-auth", (req, res) => {
+  res.cookie("logged", "true", { maxAge: 60000 * 60 * 24 * 7, httpOnly: false });
+  res.redirect(FRONTENDURL);
+});
+
+authRouter.get("/logout", (req, res, next) => {
+  req.session.destroy((err) => {
     if (err) {
       return next(err);
     }
+    res.clearCookie("logged");
+    res.clearCookie("connect.sid");
+    res.redirect("/");
   });
 });
 
 export default authRouter;
-function next(err: any): void {
-  throw new Error("Function not implemented.");
-}
-

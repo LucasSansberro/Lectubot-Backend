@@ -14,16 +14,12 @@ export const getAllUsersController = async (req: Request, res: Response) => {
 
 export const getOwnUserController = async (req: Request, res: Response) => {
   try {
-    if (req.user) {
-      const userId = req.user;
-      const ownUser = await getUserByIdService(userId!);
-      const response: APIResponse<IUser> = { success: true, data: {...ownUser}, error: null };
-      res.json({ ...response });
-    } else {
-      const response: APIResponse<null> = { success: false, data: null, error: "User is not logged in" };
-      res.json({ ...response });
-    }
-  } catch (error) {
-    res.json({ error });
+    const userId = req.user;
+    const ownUser = await getUserByIdService(userId!);
+    const response: APIResponse<IUser> = { success: true, data: { ...ownUser }, error: null };
+    res.json({ ...response });
+  } catch (error: any) {
+    const response: APIResponse<IUser> = { success: false, data: null, error: { ...error } };
+    res.json({ response });
   }
 };

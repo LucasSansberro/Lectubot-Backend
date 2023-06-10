@@ -48,6 +48,10 @@ app.use((req, res, next) => {
   next();
 });
 
+app.get("/", (req, res) => {
+  res.json({ msg: "¡Bienvenido a Lectores Argentinos!" });
+});
+
 app.use("/auth", authRouter);
 app.use("/users", usersRouter);
 app.use("/books", booksRouter);
