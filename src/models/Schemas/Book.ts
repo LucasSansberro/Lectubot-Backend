@@ -13,6 +13,7 @@ export interface IBook {
   genre: Genre[];
   cover: string;
   synopsis: string;
+  readByGroup: Date;
   stars?: number[];
   reviews?: IReview[];
 }
@@ -58,6 +59,10 @@ export const bookSchema: Schema<IBook> = new Schema<IBook>(
     },
     synopsis: {
       type: String,
+      required: true,
+    },
+    readByGroup: {
+      type: Date,
       required: true,
     },
     reviews: {
