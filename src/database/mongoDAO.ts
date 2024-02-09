@@ -10,7 +10,7 @@ export const getAll = async (model: mongoose.Model<any>) => {
 
 export const getById = async (model: mongoose.Model<any>, id: string | Express.User) => {
   try {
-    return await model.findById(id).lean();
+    return await model.findOneAndUpdate({ _id: id }, {}, { new: true, upsert: true }).lean();
   } catch (e) {
     throw "Error in the DB while getting an object by ID: " + e;
   }
