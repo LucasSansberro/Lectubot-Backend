@@ -3,12 +3,16 @@ import { Strategy } from "passport-discord";
 import ENV from "../config.js";
 import { User } from "../models/Schemas/User.js";
 
-const { CLIENTID, CLIENTSECRET } = ENV;
+const { CLIENTID, CLIENTSECRET, LECTORESID } = ENV;
 type User = {
   _id?: number;
 };
 passport.serializeUser((user: User, done) => {
   done(null, user._id);
+});
+
+passport.deserializeUser(async (user: User, done) => {
+  done(null, user);
 });
 
 passport.use(
@@ -21,20 +25,22 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
-        //TODO Don't save guild in DB, just check if user is in guild = lectores 
-        const user = await User.findOneAndUpdate(
-          { discordId: profile.id },
-          {
-            $set: {
-              username: profile.username,
-              avatar: profile.avatar,
-              guilds: profile.guilds,
+        if (profile.guilds?.find((guild) => guild.id == LECTORESID)) {
+          const user = await User.findOneAndUpdate(
+            { discordId: profile.id },
+            {
+              $set: {
+                username: profile.username,
+                avatar: profile.avatar,
+              },
             },
-          },
-          { new: true, upsert: true }
-        );
+            { new: true, upsert: true }
+          );
 
-        return done(null, user);
+          return done(null, user);
+        } else {
+          throw console.error("El usuario no está en el grupo de discord Lectores Argentinos");
+        }
       } catch (error: Error | any) {
         console.log(error);
         return done(error, undefined);
