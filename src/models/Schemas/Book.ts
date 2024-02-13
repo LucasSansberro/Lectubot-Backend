@@ -30,16 +30,7 @@ export const bookSchema: Schema<IBook> = new Schema<IBook>(
         type: objectId,
         refPath: "authorModel",
         required: true,
-      },
-      name: {
-        type: String,
-        required: true,
-      },
-      authorModel: {
-        type: String,
-        required: true,
-        enum: ["Authors"],
-      },
+      }
     },
     pages: {
       type: Number,

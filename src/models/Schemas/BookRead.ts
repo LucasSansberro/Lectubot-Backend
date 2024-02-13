@@ -5,16 +5,9 @@ import { IReview, reviewSchema } from "./Review.js";
 
 export interface IBookRead {
   _id: ObjectId;
-  title: string;
-  author: {
-    _id: ObjectId;
-    name: string;
-  };
-  pages: number;
-  genre: Genre[];
+  book_id: ObjectId;
   stars?: number;
   status: BookReadStatus;
-  cover: string;
   review?: IReview;
   started: Date;
   finished?: Date;
@@ -27,33 +20,9 @@ export const bookReadSchema: Schema<IBookRead> = new Schema<IBookRead>({
     type: String,
     required: true,
   },
-  title: {
-    type: String,
-    required: true,
-  },
-  author: {
-    id: {
-      type: objectId,
-      refPath: "authorModel",
-      required: true,
-    },
-    name: {
-      type: String,
-      required: true,
-    },
-    authorModel: {
-      type: String,
-      required: true,
-      enum: ["Authors"],
-    },
-  },
-  pages: {
-    type: Number,
-    required: true,
-  },
-  genre: {
-    type: [String],
-    enum: Genre,
+  book_id: {
+    type: objectId,
+    ref: "Books",
     required: true,
   },
   stars: {
@@ -62,10 +31,6 @@ export const bookReadSchema: Schema<IBookRead> = new Schema<IBookRead>({
   status: {
     type: String,
     enum: BookReadStatus,
-    required: true,
-  },
-  cover: {
-    type: String,
     required: true,
   },
   review: {
