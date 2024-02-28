@@ -8,7 +8,12 @@ export interface IAuthor {
   image?: string;
   nationality: string;
   genre: Genre[];
-  books: IBook[];
+  books?: IBook[];
+}
+
+export interface AuthorName {
+  _id?: ObjectId;
+  name: string;
 }
 
 export const authorSchema: Schema<IAuthor> = new Schema<IAuthor>({
@@ -30,7 +35,6 @@ export const authorSchema: Schema<IAuthor> = new Schema<IAuthor>({
   },
   books: {
     type: [bookSchema],
-    required: true,
   },
 });
 

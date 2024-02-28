@@ -1,6 +1,6 @@
 import { Router } from "express";
 import {
-  getAllAuthorsController,
+  getAllAuthorsNameAndIdController,
   getAuthorByIdController,
   postAuthorController,
   editAuthorByIdController,
@@ -10,7 +10,7 @@ import { isAuthorized } from "../utils/auth.js";
 
 const authorsRouter = Router();
 
-authorsRouter.get("/", getAllAuthorsController);
+authorsRouter.get("/", getAllAuthorsNameAndIdController);
 authorsRouter.get("/:id", isAuthorized, getAuthorByIdController);
 authorsRouter.post("/", isAuthorized, postAuthorController);
 authorsRouter.put("/:id", isAuthorized, editAuthorByIdController);

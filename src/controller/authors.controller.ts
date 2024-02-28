@@ -1,16 +1,19 @@
 import { Request, Response } from "express";
 import {
-  getAllAuthorsService,
+  getAllAuthorsNameAndIdService,
   getAuthorByIdService,
   postAuthorService,
   editAuthorByIdService,
   deleteAuthorByIdService,
 } from "../services/authors.service.js";
+import { AuthorName, IAuthor } from "../models/Schemas/Author.js";
+import { APIResponse } from "../models/APIResponse.js";
 
-export const getAllAuthorsController = async (req: Request, res: Response) => {
+export const getAllAuthorsNameAndIdController = async (req: Request, res: Response) => {
   try {
-    const allAuthors = await getAllAuthorsService();
-    res.json({ allAuthors });
+    const authorsNameAndId = await getAllAuthorsNameAndIdService();
+    const response: APIResponse<AuthorName[]> = { success: true, data: [...authorsNameAndId], error: null };
+    res.json({ ...response });
   } catch (e) {
     res.json(e);
   }
