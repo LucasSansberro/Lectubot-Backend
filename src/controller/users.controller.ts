@@ -1,25 +1,22 @@
 import { Request, Response } from "express";
 import { IUser } from "../models/Schemas/User.js";
-import { APIResponse } from "../models/APIResponse.js";
-import { getAllUsersService, getUserByIdService } from "../services/users.service.js";
+import { getUserByIdService, getUsersService } from "../services/users.service.js";
 
-export const getAllUsersController = async (req: Request, res: Response) => {
+export const getUsersController = async (req: Request, res: Response) => {
   try {
-    const allUsers = await getAllUsersService();
-    res.json({ allUsers });
+    const users: IUser[] = await getUsersService();
+    res.json({ success: true, data: [...users], error: null });
   } catch (error) {
-    res.json(error);
+    res.json({ success: false, data: null, error }).status(400);
   }
 };
 
-export const getOwnUserController = async (req: Request, res: Response) => {
+export const getOwnUserController = async (req: any, res: Response) => {
   try {
-    const userId = req.user;
-    const ownUser = await getUserByIdService(userId!);
-    const response: APIResponse<IUser> = { success: true, data: { ...ownUser }, error: null };
-    res.json({ ...response });
-  } catch (error: any) {
-    const response: APIResponse<IUser> = { success: false, data: null, error: { ...error } };
-    res.json({ response });
+    const userId: IUser = req.user;
+    const ownUser: IUser = await getUserByIdService(userId!);
+    res.json({ success: true, data: { ...ownUser }, error: null });
+  } catch (error) {
+    res.json({ success: false, data: null, error }).status(400);
   }
 };

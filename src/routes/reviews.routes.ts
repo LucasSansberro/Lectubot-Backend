@@ -1,6 +1,6 @@
 import { Router } from "express";
 import {
-  getAllReviewsController,
+  getReviewsController,
   getReviewByIdController,
   postReviewController,
   editReviewByIdController,
@@ -10,7 +10,7 @@ import { isAuthorized } from "../utils/auth.js";
 
 const reviewsRouter = Router();
 
-reviewsRouter.get("/", getAllReviewsController);
+reviewsRouter.get("/", getReviewsController);
 reviewsRouter.get("/:id", isAuthorized, getReviewByIdController);
 reviewsRouter.post("/", isAuthorized, postReviewController);
 reviewsRouter.put("/:id", isAuthorized, editReviewByIdController);

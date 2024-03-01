@@ -1,7 +1,7 @@
 import { deleteById, editById, getAll, getById, post } from "../database/mongoDAO.js";
 import { IUser, User } from "../models/Schemas/User.js";
 
-export const getAllUsersService = async () => {
+export const getUsersService = async () => {
   try {
     return await getAll(User);
   } catch (e) {

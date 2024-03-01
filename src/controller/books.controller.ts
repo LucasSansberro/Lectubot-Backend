@@ -1,62 +1,57 @@
 import { Request, Response } from "express";
-import {
-  deleteBookByIdService,
-  editBookByIdService,
-  getAllBooksService,
-  getBookByIdService,
-  postBookService,
-} from "../services/books.service.js";
+import { deleteBookByIdService, editBookByIdService, getBooksService, getBookByIdService, postBookService } from "../services/books.service.js";
+import { IBook } from "../models/Schemas/Book.js";
 
-export const getAllBooksController = async (req: Request, res: Response) => {
+export const getBooksController = async (req: Request, res: Response) => {
   try {
-    const allBooks = await getAllBooksService();
-    res.json({ allBooks });
-  } catch (e) {
-    res.json(e);
+    const books: IBook[] = await getBooksService();
+    res.json({ success: true, data: [...books], error: null });
+  } catch (error) {
+    res.json({ success: false, data: null, error }).status(400);
   }
 };
 
 export const getBookByIdController = async (req: Request, res: Response) => {
   try {
-    const bookId = req.params.id;
-    const bookFound = await getBookByIdService(bookId);
+    const bookId: string = req.params.id;
+    const bookFound: IBook = await getBookByIdService(bookId);
 
-    res.json({ bookFound });
-  } catch (e) {
-    res.json(e);
+    res.json({ success: true, data: { ...bookFound }, error: null });
+  } catch (error) {
+    res.json({ success: false, data: null, error }).status(400);
   }
 };
 
 export const postBookController = async (req: Request, res: Response) => {
   try {
-    const newBook = req.body;
-    const bookCreated = await postBookService(newBook);
+    const newBook: IBook = req.body;
+    const bookCreated: IBook = await postBookService(newBook);
 
-    res.json({ bookCreated });
-  } catch (e) {
-    res.json(e);
+    res.json({ success: true, data: { ...bookCreated }, error: null });
+  } catch (error) {
+    res.json({ success: false, data: null, error }).status(400);
   }
 };
 
 export const editBookByIdController = async (req: Request, res: Response) => {
   try {
-    const updatedBook = req.body;
-    const bookId = req.params.id;
-    const bookSuccessfullyUpdated = await editBookByIdService(bookId, updatedBook);
+    const updatedBook: IBook = req.body;
+    const bookId: string = req.params.id;
+    const bookSuccessfullyUpdated: IBook = await editBookByIdService(bookId, updatedBook);
 
-    res.json({ bookSuccessfullyUpdated });
-  } catch (e) {
-    res.json(e);
+    res.json({ success: true, data: { ...bookSuccessfullyUpdated }, error: null });
+  } catch (error) {
+    res.json({ success: false, data: null, error }).status(400);
   }
 };
 
 export const deleteBookByIdController = async (req: Request, res: Response) => {
   try {
-    const bookId = req.params.id;
-    const bookDeleted = deleteBookByIdService(bookId);
+    const bookId: string = req.params.id;
+    const bookDeleted: string = await deleteBookByIdService(bookId);
 
-    res.json({ bookDeleted });
-  } catch (e) {
-    res.json(e);
+    res.json({ success: true, data: bookDeleted, error: null });
+  } catch (error) {
+    res.json({ success: false, data: null, error }).status(400);
   }
 };

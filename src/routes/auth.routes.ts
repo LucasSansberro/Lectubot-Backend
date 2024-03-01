@@ -20,7 +20,7 @@ authRouter.get("/post-auth", (req, res) => {
   res.redirect(FRONTENDURL);
 });
 
-authRouter.get("/logout", (req, res, next) => {
+authRouter.post("/logout", (req, res, next) => {
   req.session.destroy((err) => {
     if (err) {
       return next(err);

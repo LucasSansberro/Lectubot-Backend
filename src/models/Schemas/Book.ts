@@ -26,11 +26,15 @@ export const bookSchema: Schema<IBook> = new Schema<IBook>(
       required: true,
     },
     author: {
-      id: {
+      _id: {
         type: objectId,
-        refPath: "authorModel",
+        ref: "IAuthor",
         required: true,
-      }
+      },
+      name: {
+        type: String,
+        required: true,
+      },
     },
     pages: {
       type: Number,

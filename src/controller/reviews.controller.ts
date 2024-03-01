@@ -1,62 +1,63 @@
 import { Request, Response } from "express";
 import {
-  getAllReviewsService,
+  getReviewsService,
   getReviewByIdService,
   postReviewService,
   editReviewByIdService,
   deleteReviewByIdService,
 } from "../services/reviews.service.js";
+import { IReview } from "../models/Schemas/Review.js";
 
-export const getAllReviewsController = async (req: Request, res: Response) => {
+export const getReviewsController = async (req: Request, res: Response) => {
   try {
-    const allReviews = await getAllReviewsService();
-    res.json({ allReviews });
-  } catch (e) {
-    res.json(e);
+    const reviews: IReview[] = await getReviewsService();
+    res.json({ success: true, data: [...reviews], error: null });
+  } catch (error) {
+    res.json({ success: false, data: null, error }).status(400);
   }
 };
 
 export const getReviewByIdController = async (req: Request, res: Response) => {
   try {
-    const reviewId = req.params.id;
-    const reviewFound = await getReviewByIdService(reviewId);
+    const reviewId: string = req.params.id;
+    const reviewFound: IReview = await getReviewByIdService(reviewId);
 
-    res.json({ reviewFound });
-  } catch (e) {
-    res.json(e);
+    res.json({ success: true, data: { ...reviewFound }, error: null });
+  } catch (error) {
+    res.json({ success: false, data: null, error }).status(400);
   }
 };
 
 export const postReviewController = async (req: Request, res: Response) => {
   try {
-    const newReview = req.body;
-    const reviewCreated = await postReviewService(newReview);
+    const newReview: IReview = req.body;
+    const reviewCreated: IReview = await postReviewService(newReview);
 
-    res.json({ reviewCreated });
-  } catch (e) {
-    res.json(e);
+    res.json({ success: true, data: { ...reviewCreated }, error: null });
+  } catch (error) {
+    res.json({ success: false, data: null, error }).status(400).status(400);
   }
 };
 
 export const editReviewByIdController = async (req: Request, res: Response) => {
   try {
-    const updatedReview = req.body;
-    const reviewId = req.params.id;
-    const reviewSuccessfullyUpdated = await editReviewByIdService(reviewId, updatedReview);
+    const updatedReview: IReview = req.body;
+    const reviewId: string = req.params.id;
+    const reviewSuccessfullyUpdated: IReview = await editReviewByIdService(reviewId, updatedReview);
 
-    res.json({ reviewSuccessfullyUpdated });
-  } catch (e) {
-    res.json(e);
+    res.json({ success: true, data: { ...reviewSuccessfullyUpdated }, error: null });
+  } catch (error) {
+    res.json({ success: false, data: null, error }).status(400);
   }
 };
 
 export const deleteReviewByIdController = async (req: Request, res: Response) => {
   try {
-    const reviewId = req.params.id;
-    const reviewDeleted = deleteReviewByIdService(reviewId);
+    const reviewId: string = req.params.id;
+    const reviewDeleted: string = await deleteReviewByIdService(reviewId);
 
-    res.json({ reviewDeleted });
-  } catch (e) {
-    res.json(e);
+    res.json({ success: true, data: reviewDeleted, error: null });
+  } catch (error) {
+    res.json({ success: false, data: null, error }).status(400);
   }
 };

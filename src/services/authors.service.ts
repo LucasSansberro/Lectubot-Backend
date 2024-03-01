@@ -1,7 +1,7 @@
 import { deleteById, editById, getAll, getById, post } from "../database/mongoDAO.js";
 import { Author, IAuthor } from "../models/Schemas/Author.js";
 
-export const getAllAuthorsNameAndIdService = async () => {
+export const getAuthorsNameAndIdService = async () => {
   try {
     return (await getAll(Author)).map((author) => {
       return { name: author.name, _id: author._id };

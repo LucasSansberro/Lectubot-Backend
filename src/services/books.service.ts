@@ -1,7 +1,7 @@
 import { deleteById, editById, getAll, getById, post } from "../database/mongoDAO.js";
 import { Book, IBook } from "../models/Schemas/Book.js";
 
-export const getAllBooksService = async () => {
+export const getBooksService = async () => {
   try {
     return await getAll(Book);
   } catch (e) {
