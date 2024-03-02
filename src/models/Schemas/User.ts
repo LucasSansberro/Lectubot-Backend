@@ -1,12 +1,10 @@
 import { model, ObjectId, Schema } from "mongoose";
-import { bookReadSchema, IBookRead } from "./BookRead.js";
 
 export interface IUser {
   _id?: ObjectId;
   discordId: string;
   username: string;
   avatar: string;
-  books: IBookRead[];
 }
 
 const userSchema: Schema<IUser> = new Schema<IUser>(
@@ -21,10 +19,6 @@ const userSchema: Schema<IUser> = new Schema<IUser>(
     },
     avatar: {
       type: String,
-      required: true,
-    },
-    books: {
-      type: [bookReadSchema],
       required: true,
     },
   },

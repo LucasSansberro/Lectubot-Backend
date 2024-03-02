@@ -11,7 +11,7 @@ import { isAuthorized } from "../utils/auth.js";
 const authorsRouter = Router();
 
 authorsRouter.get("/", getAuthorsNameAndIdController);
-authorsRouter.get("/:id", isAuthorized, getAuthorByIdController);
+authorsRouter.get("/:id", getAuthorByIdController);
 authorsRouter.post("/", isAuthorized, postAuthorController);
 authorsRouter.put("/:id", isAuthorized, editAuthorByIdController);
 authorsRouter.delete("/:id", isAuthorized, deleteAuthorByIdController);

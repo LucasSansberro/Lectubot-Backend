@@ -28,7 +28,7 @@ export const bookSchema: Schema<IBook> = new Schema<IBook>(
     author: {
       _id: {
         type: objectId,
-        ref: "IAuthor",
+        ref: "Author",
         required: true,
       },
       name: {

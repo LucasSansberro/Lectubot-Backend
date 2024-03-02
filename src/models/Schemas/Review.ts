@@ -13,12 +13,12 @@ const objectId = mongoose.Schema.Types.ObjectId;
 export const reviewSchema: Schema<IReview> = new Schema<IReview>({
   user_id: {
     type: objectId,
-    ref:"Users",
+    ref:"User",
     required: true,
   },
   book_id: {
     type: objectId,
-    ref:"Books",
+    ref:"Book",
     required: true,
   },
   content: {

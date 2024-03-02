@@ -6,6 +6,7 @@ import { IReview, reviewSchema } from "./Review.js";
 export interface IBookRead {
   _id: ObjectId;
   book_id: ObjectId;
+  user_id: ObjectId;
   stars?: number;
   status: BookReadStatus;
   review?: IReview;
@@ -16,13 +17,14 @@ export interface IBookRead {
 const objectId = mongoose.Schema.Types.ObjectId;
 
 export const bookReadSchema: Schema<IBookRead> = new Schema<IBookRead>({
-  _id: {
-    type: String,
-    required: true,
-  },
   book_id: {
     type: objectId,
     ref: "Books",
+    required: true,
+  },
+  user_id: {
+    type: objectId,
+    ref: "IUser",
     required: true,
   },
   stars: {

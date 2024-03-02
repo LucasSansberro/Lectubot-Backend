@@ -5,8 +5,10 @@ import {
   postBookReadService,
   editBookReadByIdService,
   deleteBookReadByIdService,
+  getBooksReadByUserOrBookIdService,
 } from "../services/booksRead.service.js";
 import { IBookRead } from "../models/Schemas/BookRead.js";
+import { IUser } from "../models/Schemas/User.js";
 
 export const getBooksReadController = async (req: Request, res: Response) => {
   try {
@@ -23,6 +25,30 @@ export const getBookReadByIdController = async (req: Request, res: Response) => 
     const bookReadFound: IBookRead = await getBookReadByIdService(bookReadId);
 
     res.json({ success: true, data: { ...bookReadFound }, error: null });
+  } catch (error) {
+    res.json({ success: false, data: null, error }).status(400);
+  }
+};
+
+export const getOwnBooksReadController = async (req: any, res: Response) => {
+  console.log("Hola")
+  try {
+    const userId = req.user;
+    const booksReadFound: IBookRead[] = await getBooksReadByUserOrBookIdService("user", userId);
+
+    res.json({ success: true, data: [...booksReadFound], error: null });
+  } catch (error) {
+    res.json({ success: false, data: null, error }).status(400);
+  }
+};
+
+export const getBooksReadByUserOrBookIdController = async (req: Request, res: Response) => {
+  try {
+    const type: string = req.params.type;
+    const id: string = req.params.id;
+    const booksReadFound: any = await getBooksReadByUserOrBookIdService(type, id);
+
+    res.json({ success: true, data: [...booksReadFound], error: null });
   } catch (error) {
     res.json({ success: false, data: null, error }).status(400);
   }
