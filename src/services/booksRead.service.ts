@@ -1,7 +1,7 @@
 import { deleteById, editById, getAll, getById, post } from "../database/mongoDAO.js";
 import { BookRead, IBookRead } from "../models/Schemas/BookRead.js";
 
-export const getBooksReadService = async () => {
+export const getBooksReadService = async (): Promise<IBookRead[]> => {
   try {
     return await getAll(BookRead);
   } catch (e) {
@@ -9,7 +9,7 @@ export const getBooksReadService = async () => {
   }
 };
 
-export const getBookReadByIdService = async (id: string) => {
+export const getBookReadByIdService = async (id: string): Promise<IBookRead> => {
   try {
     return await getById(BookRead, id);
   } catch (e) {
@@ -21,7 +21,7 @@ export const getBooksReadByUserOrBookIdService = async (type: string, id: string
   try {
     let booksRead: IBookRead[] = [];
     if (type == "user") {
-      booksRead = await BookRead.find({ user_id: id }).lean().populate({path:'book_id',select:'_id title author cover'})
+      booksRead = await BookRead.find({ user_id: id }).lean().populate({ path: "book_id", select: "_id title author cover" });
     } else if (type == "book") {
       booksRead = await BookRead.find({ book_id: id });
     }
@@ -31,8 +31,8 @@ export const getBooksReadByUserOrBookIdService = async (type: string, id: string
   }
 };
 const test = await getBooksReadByUserOrBookIdService("user", "644718d95e3a21c0cbb32210");
-console.log(test)
-export const postBookReadService = async (newReadedBook: IBookRead) => {
+console.log(test);
+export const postBookReadService = async (newReadedBook: IBookRead): Promise<IBookRead> => {
   try {
     return await post(BookRead, newReadedBook);
   } catch (e) {
@@ -40,7 +40,7 @@ export const postBookReadService = async (newReadedBook: IBookRead) => {
   }
 };
 
-export const editBookReadByIdService = async (id: string, updatedBookRead: IBookRead) => {
+export const editBookReadByIdService = async (id: string, updatedBookRead: IBookRead): Promise<IBookRead> => {
   try {
     return await editById(BookRead, id, updatedBookRead);
   } catch (e) {
@@ -48,7 +48,7 @@ export const editBookReadByIdService = async (id: string, updatedBookRead: IBook
   }
 };
 
-export const deleteBookReadByIdService = async (id: string) => {
+export const deleteBookReadByIdService = async (id: string): Promise<string> => {
   try {
     return await deleteById(BookRead, id);
   } catch (e) {

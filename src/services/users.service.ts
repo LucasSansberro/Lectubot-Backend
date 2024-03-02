@@ -1,7 +1,7 @@
-import { deleteById, editById, getAll, getById, post } from "../database/mongoDAO.js";
+import { deleteById, editById, getAll, getById } from "../database/mongoDAO.js";
 import { IUser, User } from "../models/Schemas/User.js";
 
-export const getUsersService = async () => {
+export const getUsersService = async (): Promise<IUser[]> => {
   try {
     return await getAll(User);
   } catch (e) {
@@ -9,7 +9,7 @@ export const getUsersService = async () => {
   }
 };
 
-export const getUserByIdService = async (id: string | Express.User) => {
+export const getUserByIdService = async (id: string): Promise<IUser> => {
   try {
     return await getById(User, id);
   } catch (e) {
@@ -17,7 +17,7 @@ export const getUserByIdService = async (id: string | Express.User) => {
   }
 };
 
-export const editUserByIdService = async (id: string, updatedUser: IUser) => {
+export const editUserByIdService = async (id: string, updatedUser: IUser): Promise<IUser> => {
   try {
     return await editById(User, id, updatedUser);
   } catch (e) {
@@ -25,7 +25,7 @@ export const editUserByIdService = async (id: string, updatedUser: IUser) => {
   }
 };
 
-export const deleteUserByIdService = async (id: string) => {
+export const deleteUserByIdService = async (id: string): Promise<string> => {
   try {
     return await deleteById(User, id);
   } catch (e) {

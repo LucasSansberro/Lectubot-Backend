@@ -1,7 +1,7 @@
 import { deleteById, editById, getAll, getById, post } from "../database/mongoDAO.js";
 import { IReview, Review } from "../models/Schemas/Review.js";
 
-export const getReviewsService = async () => {
+export const getReviewsService = async (): Promise<IReview[]> => {
   try {
     return await getAll(Review);
   } catch (e) {
@@ -9,7 +9,7 @@ export const getReviewsService = async () => {
   }
 };
 
-export const getReviewByIdService = async (id: string) => {
+export const getReviewByIdService = async (id: string): Promise<IReview> => {
   try {
     return await getById(Review, id);
   } catch (e) {
@@ -17,7 +17,7 @@ export const getReviewByIdService = async (id: string) => {
   }
 };
 
-export const postReviewService = async (newReview: IReview) => {
+export const postReviewService = async (newReview: IReview): Promise<IReview> => {
   try {
     return await post(Review, newReview);
   } catch (e) {
@@ -25,7 +25,7 @@ export const postReviewService = async (newReview: IReview) => {
   }
 };
 
-export const editReviewByIdService = async (id: string, updatedReview: IReview) => {
+export const editReviewByIdService = async (id: string, updatedReview: IReview): Promise<IReview> => {
   try {
     return await editById(Review, id, updatedReview);
   } catch (e) {
@@ -33,7 +33,7 @@ export const editReviewByIdService = async (id: string, updatedReview: IReview) 
   }
 };
 
-export const deleteReviewByIdService = async (id: string) => {
+export const deleteReviewByIdService = async (id: string): Promise<string> => {
   try {
     return await deleteById(Review, id);
   } catch (e) {

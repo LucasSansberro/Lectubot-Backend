@@ -1,7 +1,7 @@
 import { deleteById, editById, getAll, getById, post } from "../database/mongoDAO.js";
 import { Book, IBook } from "../models/Schemas/Book.js";
 
-export const getBooksService = async () => {
+export const getBooksService = async (): Promise<IBook[]> => {
   try {
     return await getAll(Book);
   } catch (e) {
@@ -9,7 +9,7 @@ export const getBooksService = async () => {
   }
 };
 
-export const getBookByIdService = async (id: string) => {
+export const getBookByIdService = async (id: string): Promise<IBook> => {
   try {
     return await getById(Book, id);
   } catch (e) {
@@ -17,7 +17,7 @@ export const getBookByIdService = async (id: string) => {
   }
 };
 
-export const postBookService = async (newBook: IBook) => {
+export const postBookService = async (newBook: IBook): Promise<IBook> => {
   try {
     return await post(Book, newBook);
   } catch (e) {
@@ -25,7 +25,7 @@ export const postBookService = async (newBook: IBook) => {
   }
 };
 
-export const editBookByIdService = async (id: string, updatedBook: IBook) => {
+export const editBookByIdService = async (id: string, updatedBook: IBook): Promise<IBook> => {
   try {
     return await editById(Book, id, updatedBook);
   } catch (e) {
@@ -33,7 +33,7 @@ export const editBookByIdService = async (id: string, updatedBook: IBook) => {
   }
 };
 
-export const deleteBookByIdService = async (id: string) => {
+export const deleteBookByIdService = async (id: string): Promise<string> => {
   try {
     return await deleteById(Book, id);
   } catch (e) {
