@@ -1,14 +1,14 @@
 import { Request, Response } from "express";
-import {
-  getBooksReadService,
-  getBookReadByIdService,
-  postBookReadService,
-  editBookReadByIdService,
-  deleteBookReadByIdService,
-  getBooksReadByUserOrBookIdService,
-} from "../services/booksRead.service.js";
 import { IBookRead } from "../models/Schemas/BookRead.js";
-import { IUser } from "../models/Schemas/User.js";
+import {
+  deleteBookReadByIdService,
+  editBookReadByIdService,
+  getBookReadByIdService,
+  getBooksReadByUserOrBookIdService,
+  getBooksReadService,
+  postBookReadService,
+} from "../services/booksRead.service.js";
+import { BookReadStatus } from "../models/Enum/BookReadStatus.js";
 
 export const getBooksReadController = async (req: Request, res: Response) => {
   try {
@@ -30,23 +30,14 @@ export const getBookReadByIdController = async (req: Request, res: Response) => 
   }
 };
 
-export const getOwnBooksReadController = async (req: any, res: Response) => {
-  console.log("Hola")
-  try {
-    const userId = req.user;
-    const booksReadFound: IBookRead[] = await getBooksReadByUserOrBookIdService("user", userId);
-
-    res.json({ success: true, data: [...booksReadFound], error: null });
-  } catch (error) {
-    res.json({ success: false, data: null, error }).status(400);
-  }
-};
-
 export const getBooksReadByUserOrBookIdController = async (req: Request, res: Response) => {
   try {
     const type: string = req.params.type;
-    const id: string = req.params.id;
-    const booksReadFound: any = await getBooksReadByUserOrBookIdService(type, id);
+    const id: string | Express.User = req.params.id != null ? req.params.id : req.user!;
+    const statusQueryParam = req.query.readStatus as string | undefined;
+    const status: BookReadStatus | undefined = statusQueryParam ? (BookReadStatus as any)[statusQueryParam] : undefined;
+
+    const booksReadFound: any = await getBooksReadByUserOrBookIdService(type, id, status);
 
     res.json({ success: true, data: [...booksReadFound], error: null });
   } catch (error) {

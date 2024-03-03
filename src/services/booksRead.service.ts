@@ -1,4 +1,5 @@
-import { deleteById, editById, getAll, getById, post } from "../database/mongoDAO.js";
+import { deleteById, editById, getAll, getById, getByValue, post } from "../database/mongoDAO.js";
+import { BookReadStatus } from "../models/Enum/BookReadStatus.js";
 import { BookRead, IBookRead } from "../models/Schemas/BookRead.js";
 
 export const getBooksReadService = async (): Promise<IBookRead[]> => {
@@ -17,13 +18,13 @@ export const getBookReadByIdService = async (id: string): Promise<IBookRead> => 
   }
 };
 
-export const getBooksReadByUserOrBookIdService = async (type: string, id: string): Promise<IBookRead[]> => {
+export const getBooksReadByUserOrBookIdService = async (type: string, id: string | Express.User, status?: BookReadStatus): Promise<IBookRead[]> => {
   try {
     let booksRead: IBookRead[] = [];
     if (type == "user") {
-      booksRead = await BookRead.find({ user_id: id }).lean().populate({ path: "book_id", select: "_id title author cover" });
+      booksRead = await getByValue(BookRead, { user_id: id }, { path: "book_id", select: "_id title author cover" });
     } else if (type == "book") {
-      booksRead = await BookRead.find({ book_id: id });
+      booksRead = await getByValue(BookRead, { book_id: id });
     }
     return booksRead;
   } catch (e) {

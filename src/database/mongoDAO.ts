@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { PopulateOptions } from "mongoose";
 
 export const getAll = async (model: mongoose.Model<any>) => {
   try {
@@ -16,9 +16,13 @@ export const getById = async (model: mongoose.Model<any>, id: string | Express.U
   }
 };
 
-export const getByValue = async (model: mongoose.Model<any>, value: object) => {
+export const getByValue = async (model: mongoose.Model<any>, value: object, populateOptions?: PopulateOptions) => {
   try {
-    return await model.findOne(value);
+    if (populateOptions != null) {
+      return await model.findOne(value).lean().populate(populateOptions!);
+    } else {
+      return await model.findOne(value).lean();
+    }
   } catch (e) {
     throw "Error in the DB while getting an object by value: " + e;
   }
@@ -27,7 +31,7 @@ export const getByValue = async (model: mongoose.Model<any>, value: object) => {
 export const post = async (model: mongoose.Model<any>, object: any) => {
   try {
     const postedObject = new model(object);
-    return await postedObject.save();
+    return await postedObject.save().lean();
   } catch (e) {
     throw "Error in the DB while posting an object: " + e;
   }
@@ -35,12 +39,14 @@ export const post = async (model: mongoose.Model<any>, object: any) => {
 
 export const editById = async (model: mongoose.Model<any>, id: string, object: any) => {
   try {
-    return await model.findOneAndUpdate(
-      { _id: id },
-      {
-        $set: object,
-      }
-    );
+    return await model
+      .findOneAndUpdate(
+        { _id: id },
+        {
+          $set: object,
+        }
+      )
+      .lean();
   } catch (e) {
     throw "Error in the DB while updating an object by ID: " + e;
   }
