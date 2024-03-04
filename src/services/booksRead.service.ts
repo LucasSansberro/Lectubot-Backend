@@ -18,11 +18,13 @@ export const getBookReadByIdService = async (id: string): Promise<IBookRead> => 
   }
 };
 
-export const getBooksReadByUserOrBookIdService = async (type: string, id: string | Express.User, status?: BookReadStatus): Promise<IBookRead[]> => {
+export const getBooksReadByValueService = async (type: string, id: string | Express.User, status?: BookReadStatus): Promise<IBookRead[]> => {
   try {
     let booksRead: IBookRead[] = [];
     if (type == "user") {
-      booksRead = await getByValue(BookRead, { user_id: id }, { path: "book_id", select: "_id title author cover" });
+      booksRead = status
+        ? await getByValue(BookRead, { user_id: id, status }, { path: "book_id", select: "_id title author cover" })
+        : await getByValue(BookRead, { user_id: id }, { path: "book_id", select: "_id title author cover" });
     } else if (type == "book") {
       booksRead = await getByValue(BookRead, { book_id: id });
     }
@@ -31,8 +33,7 @@ export const getBooksReadByUserOrBookIdService = async (type: string, id: string
     throw "Error getting read books from the database: " + e;
   }
 };
-const test = await getBooksReadByUserOrBookIdService("user", "644718d95e3a21c0cbb32210");
-console.log(test);
+
 export const postBookReadService = async (newReadedBook: IBookRead): Promise<IBookRead> => {
   try {
     return await post(BookRead, newReadedBook);

@@ -4,7 +4,7 @@ import {
   deleteBookReadByIdService,
   editBookReadByIdService,
   getBookReadByIdService,
-  getBooksReadByUserOrBookIdService,
+  getBooksReadByValueService,
   getBooksReadService,
   postBookReadService,
 } from "../services/booksRead.service.js";
@@ -30,14 +30,14 @@ export const getBookReadByIdController = async (req: Request, res: Response) => 
   }
 };
 
-export const getBooksReadByUserOrBookIdController = async (req: Request, res: Response) => {
+export const getBooksReadByValueController = async (req: Request, res: Response) => {
   try {
     const type: string = req.params.type;
-    const id: string | Express.User = req.params.id != null ? req.params.id : req.user!;
+    const id: string | Express.User = req.params.id != 'undefined' ? req.params.id : req.user!;
     const statusQueryParam = req.query.readStatus as string | undefined;
     const status: BookReadStatus | undefined = statusQueryParam ? (BookReadStatus as any)[statusQueryParam] : undefined;
 
-    const booksReadFound: any = await getBooksReadByUserOrBookIdService(type, id, status);
+    const booksReadFound: any = await getBooksReadByValueService(type, id, status);
 
     res.json({ success: true, data: [...booksReadFound], error: null });
   } catch (error) {

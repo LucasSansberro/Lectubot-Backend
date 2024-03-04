@@ -3,7 +3,7 @@ import {
   deleteBookReadByIdController,
   editBookReadByIdController,
   getBookReadByIdController,
-  getBooksReadByUserOrBookIdController,
+  getBooksReadByValueController,
   getBooksReadController,
   postBookReadController,
 } from "../controller/booksRead.controller.js";
@@ -13,7 +13,7 @@ const booksReadRouter = Router();
 
 booksReadRouter.get("/", isAuthorized, getBooksReadController);
 booksReadRouter.get("/:id", isAuthorized, getBookReadByIdController);
-booksReadRouter.get("/:type/:id", isAuthorized, getBooksReadByUserOrBookIdController);
+booksReadRouter.get("/:type/:id", isAuthorized, getBooksReadByValueController);
 booksReadRouter.post("/", isAuthorized, postBookReadController);
 booksReadRouter.put("/:id", isAuthorized, editBookReadByIdController);
 booksReadRouter.delete("/:id", isAuthorized, deleteBookReadByIdController);

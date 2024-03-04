@@ -9,7 +9,7 @@ export const getUsersService = async (): Promise<IUser[]> => {
   }
 };
 
-export const getUserByIdService = async (id: string): Promise<IUser> => {
+export const getUserByIdService = async (id: string | Express.User): Promise<IUser> => {
   try {
     return await getById(User, id);
   } catch (e) {
