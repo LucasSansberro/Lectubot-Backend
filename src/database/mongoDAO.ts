@@ -19,9 +19,9 @@ export const getById = async (model: mongoose.Model<any>, id: string | Express.U
 export const getByValue = async (model: mongoose.Model<any>, value: object, populateOptions?: PopulateOptions) => {
   try {
     if (populateOptions != null) {
-      return await model.findOne(value).lean().populate(populateOptions!);
+      return await model.find(value).lean().populate(populateOptions!);
     } else {
-      return await model.findOne(value).lean();
+      return await model.find(value).lean();
     }
   } catch (e) {
     throw "Error in the DB while getting an object by value: " + e;
@@ -31,7 +31,7 @@ export const getByValue = async (model: mongoose.Model<any>, value: object, popu
 export const post = async (model: mongoose.Model<any>, object: any) => {
   try {
     const postedObject = new model(object);
-    return await postedObject.save().lean();
+    return await postedObject.save();
   } catch (e) {
     throw "Error in the DB while posting an object: " + e;
   }
