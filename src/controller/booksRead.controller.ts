@@ -9,6 +9,9 @@ import {
   postBookReadService,
 } from "../services/booksRead.service.js";
 import { BookReadStatus } from "../models/Enum/BookReadStatus.js";
+import { postReviewService } from "../services/reviews.service.js";
+import { getBookByIdService } from "../services/books.service.js";
+import { IBook } from "../models/Schemas/Book.js";
 
 export const getBooksReadController = async (req: Request, res: Response) => {
   try {
@@ -74,4 +77,24 @@ export const deleteBookReadByIdController = async (req: Request, res: Response) 
   } catch (error) {
     res.json({ success: false, data: null, error }).status(400);
   }
+};
+
+export const endBookReadingController = async (req: Request, res: Response) => {
+  try {
+    const status = req.query.readStatus as string | undefined;
+    const updatedBookRead: IBookRead = req.body;
+    const bookId: string = req.body.book_id;
+    const bookReadId: string = req.params.id;
+
+    if (status == BookReadStatus.reading) {
+      const toUpdateBook: IBook = await getBookByIdService(bookId);
+      toUpdateBook.stars?.push(updatedBookRead.stars!);
+      if (updatedBookRead.review) {
+        await postReviewService(updatedBookRead.review!);
+        toUpdateBook.reviews?.push(updatedBookRead.review!);
+      }
+    }
+    const bookReadSuccessfullyUpdated: IBookRead = await editBookReadByIdService(bookReadId, updatedBookRead);
+    res.json({ success: true, data: { ...bookReadSuccessfullyUpdated }, error: null });
+  } catch (error) {}
 };
