@@ -1,4 +1,4 @@
-import { deleteById, editById, getAll, getById, post } from "../database/mongoDAO.js";
+import { deleteById, editById, getAll, getById, getByValue, post } from "../database/mongoDAO.js";
 import { Book, IBook } from "../models/Schemas/Book.js";
 
 export const getBooksService = async (): Promise<IBook[]> => {
@@ -14,6 +14,17 @@ export const getBookByIdService = async (id: string): Promise<IBook> => {
     return await getById(Book, id);
   } catch (e) {
     throw "Error getting a book by ID: " + e;
+  }
+};
+
+export const getBooksByValueService = async (type: string, author: any): Promise<IBook[]> => {
+  try {
+    if (type == "author") {
+      return await getByValue(Book, { author });
+    }
+    return [];
+  } catch (e) {
+    throw "Error getting read books from the database: " + e;
   }
 };
 

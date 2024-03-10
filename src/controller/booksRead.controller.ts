@@ -10,7 +10,7 @@ import {
 } from "../services/booksRead.service.js";
 import { BookReadStatus } from "../models/Enum/BookReadStatus.js";
 import { postReviewService } from "../services/reviews.service.js";
-import { getBookByIdService } from "../services/books.service.js";
+import { editBookByIdService, getBookByIdService } from "../services/books.service.js";
 import { IBook } from "../models/Schemas/Book.js";
 
 export const getBooksReadController = async (req: Request, res: Response) => {
@@ -81,18 +81,18 @@ export const deleteBookReadByIdController = async (req: Request, res: Response) 
 
 export const endBookReadingController = async (req: Request, res: Response) => {
   try {
-    const status = req.query.readStatus as string | undefined;
+    const bookReadId: string = req.params.id;
     const updatedBookRead: IBookRead = req.body;
     const bookId: string = req.body.book_id;
-    const bookReadId: string = req.params.id;
 
-    if (status == BookReadStatus.reading) {
+    if (updatedBookRead.status == BookReadStatus.read) {
       const toUpdateBook: IBook = await getBookByIdService(bookId);
       toUpdateBook.stars?.push(updatedBookRead.stars!);
       if (updatedBookRead.review) {
         await postReviewService(updatedBookRead.review!);
         toUpdateBook.reviews?.push(updatedBookRead.review!);
       }
+      await editBookByIdService(bookId, toUpdateBook);
     }
     const bookReadSuccessfullyUpdated: IBookRead = await editBookReadByIdService(bookReadId, updatedBookRead);
     res.json({ success: true, data: { ...bookReadSuccessfullyUpdated }, error: null });

@@ -1,5 +1,12 @@
 import { Request, Response } from "express";
-import { deleteBookByIdService, editBookByIdService, getBooksService, getBookByIdService, postBookService } from "../services/books.service.js";
+import {
+  deleteBookByIdService,
+  editBookByIdService,
+  getBooksService,
+  getBookByIdService,
+  postBookService,
+  getBooksByValueService,
+} from "../services/books.service.js";
 import { IBook } from "../models/Schemas/Book.js";
 
 export const getBooksController = async (req: Request, res: Response) => {
@@ -17,6 +24,17 @@ export const getBookByIdController = async (req: Request, res: Response) => {
     const bookFound: IBook = await getBookByIdService(bookId);
 
     res.json({ success: true, data: { ...bookFound }, error: null });
+  } catch (error) {
+    res.json({ success: false, data: null, error }).status(400);
+  }
+};
+
+export const getBooksByValueController = async (req: Request, res: Response) => {
+  try {
+    const type: string = req.params.type;
+    const id: string = req.params.id;
+    const booksFound: IBook[] = await getBooksByValueService(type, id);
+    res.json({ success: true, data: [...booksFound], error: null });
   } catch (error) {
     res.json({ success: false, data: null, error }).status(400);
   }
