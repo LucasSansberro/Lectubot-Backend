@@ -17,10 +17,10 @@ export const getBookByIdService = async (id: string): Promise<IBook> => {
   }
 };
 
-export const getBooksByValueService = async (type: string, author: any): Promise<IBook[]> => {
+export const getBooksByValueService = async (type: string, id: any): Promise<IBook[]> => {
   try {
     if (type == "author") {
-      return await getByValue(Book, { author });
+      return await getByValue(Book, { "author._id": id });
     }
     return [];
   } catch (e) {

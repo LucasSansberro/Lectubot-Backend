@@ -34,6 +34,7 @@ export const getBooksByValueController = async (req: Request, res: Response) => 
     const type: string = req.params.type;
     const id: string = req.params.id;
     const booksFound: IBook[] = await getBooksByValueService(type, id);
+
     res.json({ success: true, data: [...booksFound], error: null });
   } catch (error) {
     res.json({ success: false, data: null, error }).status(400);
